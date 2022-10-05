@@ -18,7 +18,7 @@ initialMsgButtonElement.addEventListener('click', function (eventObject){
     initialMsgContainer.classList.add(initialMsgAnimationName);
     cursorElement.classList.add(cursorAnimationName);
 })
-mainContainerElement.addEventListener('mouseout', function (eventObject){
+mainContainerElement.addEventListener('mouseleave', function (eventObject){
     console.log("Hola");
     if (printLettersCount ===0){
         cursorElement.classList.remove(cursorAnimationName);

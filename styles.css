@@ -11,7 +11,7 @@ html{
     top: 30%;
     left:25%;
     width: 50vw;
-    height: 25vh;
+    height: 15vw;
     position: absolute;
     display: flex;
     flex-wrap: nowrap;
@@ -19,8 +19,15 @@ html{
     justify-content: center;
     font-size: 3vw;
     font-family: 'Noto Sans Mono', monospace;
-    background-color: #aaa;
+    background-image: inherit;
     border-radius: 20px;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: #000 0px 0px 10px;
+    z-index: 99;
+}
+.main-input-container-writting-animation{
+    transform: scale(1.05,1.05);
+    box-shadow: #000 10px 10px 50px;
 }
 .main-input-container__input{
     display: flex;
@@ -65,6 +72,15 @@ html{
     transform: scale(0,1);
     color : var(--cursor-final-color);
     position: absolute;
+}
+
+.writting-ball{
+    position: absolute;
+    z-index: -9;
+    width: 2vw;
+    height: 2vw;
+    background-color: #000;
+    border-radius: 20px;
 }
 
 
