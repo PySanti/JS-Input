@@ -1,0 +1,56 @@
+html{
+    background-image: linear-gradient(to left, #a0b,  #05f);
+    transition: transform .5s;
+    padding: 0px;
+    user-select: none;
+}
+
+
+.main-input-container{
+    top: 30%;
+    left:25%;
+    width: 50vw;
+    height: 25vh;
+    position: absolute;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    font-size: 3vw;
+    font-family: 'Noto Sans Mono', monospace;
+    
+}
+.main-input-container__input{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.main-input-container__input__cursor{
+    width: 20px;
+    height: 100px;
+    background-color: #000;
+    transition: background-color 0s, transform 0s;
+    border-radius: 20px;
+    transform: scale(0,0);
+}
+
+.cursorAnimationAsignment{
+    transform: scale(1,1);
+    background-color: #0af;
+    transition: background-color 1s, transform .5s;
+}
+
+.main-input-container__initial-msg{
+    transform: scale(1,1);
+    color : #000;
+    transition: transform .5s, color .5s ;
+}
+
+.initial-msg-remove-animation{
+    transform: scale(0,1);
+    color : #0af;
+    position: absolute;
+}
