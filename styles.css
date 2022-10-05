@@ -29,8 +29,8 @@ html{
 
 
 .main-input-container__input__cursor{
-    width: 20px;
-    height: 100px;
+    width: 2vw;
+    height: 5vw;
     background-color: #000;
     transition: background-color 0s, transform 0s;
     border-radius: 20px;

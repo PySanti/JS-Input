@@ -15,7 +15,6 @@ htmlElement.addEventListener('click', function (eventObject){
     cursorElement.classList.add(cursorAnimationName);
 })
 htmlElement.addEventListener('mouseout', function (eventObject){
-    console.log(printLettersCount)
     if (printLettersCount ===0){
         cursorElement.classList.remove(cursorAnimationName);
         initialMsgContainer.classList.remove(initialMsgAnimationName);
