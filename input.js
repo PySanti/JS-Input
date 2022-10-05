@@ -21,25 +21,22 @@ function elementInArray(array, element){
 
 bodyElement.addEventListener('keydown', function (event){
     if (elementInArray(printableLetters, event.key.toLowerCase())){
+        let textLength = containerElement.innerHTML.length;
+        let lastTextFragment = containerElement.innerHTML.slice(textLength-6, textLength);
         let cursorVisible = cursorElement.classList.contains(cursorAnimationName);
+
         if (cursorVisible){
-            if (event.key !== backSpace){
-                if (printLettersCount !== maxPrintableLetters){
-                    if (event.key === literalWhiteSpace){
-                        containerElement.innerHTML += forcedWhiteSpace;
-                    } else {
-                        containerElement.innerHTML += event.key;
-                    }
-                    printLettersCount +=1;
+            if ((event.key !== backSpace) && (printLettersCount !== maxPrintableLetters)){
+                if (event.key === literalWhiteSpace){
+                    containerElement.innerHTML += forcedWhiteSpace;
+                } else {
+                    containerElement.innerHTML += event.key;
                 }
-            } else if ((event.key === backSpace) && (containerElement.innerHTML.length > 0)){
-                let textLength = containerElement.innerHTML.length;
-                let lastTextFragment = containerElement.innerHTML.slice(textLength-6, textLength);
+                printLettersCount +=1;
+            } else if ((event.key === backSpace) && (textLength > 0)){
                 if (lastTextFragment === forcedWhiteSpace){
-                    console.log('forced white space encontrado !!');
                     containerElement.innerHTML = containerElement.innerHTML.slice(0,textLength-6);
                 } else {
-                    console.log(`last text fragment es ${lastTextFragment}`);
                     containerElement.innerHTML = containerElement.innerHTML.slice(0,-1);
                 }
                 printLettersCount -=1;

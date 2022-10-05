@@ -1,8 +1,9 @@
 html{
     background-image: linear-gradient(to left, #a0b,  #05f);
-    transition: transform .5s;
     padding: 0px;
     user-select: none;
+    --cursor-final-color : #f57;
+    --initial-title-gradient : linear-gradient(to left, #f0f,  #f57);
 }
 
 
@@ -18,7 +19,8 @@ html{
     justify-content: center;
     font-size: 3vw;
     font-family: 'Noto Sans Mono', monospace;
-    
+    background-color: #aaa;
+    border-radius: 20px;
 }
 .main-input-container__input{
     display: flex;
@@ -39,7 +41,7 @@ html{
 
 .cursorAnimationAsignment{
     transform: scale(1,1);
-    background-color: #0af;
+    background-color: var(--cursor-final-color);
     transition: background-color 1s, transform .5s;
 }
 
@@ -48,9 +50,21 @@ html{
     color : #000;
     transition: transform .5s, color .5s ;
 }
+.main-input-container__initial-msg__button{
+    cursor: pointer;
+    transition: -webkit-text-fill-color 1s;
+}
+
+.main-input-container__initial-msg__button:hover{
+    background-image: var(--initial-title-gradient);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
 
 .initial-msg-remove-animation{
     transform: scale(0,1);
-    color : #0af;
+    color : var(--cursor-final-color);
     position: absolute;
 }
+
+
