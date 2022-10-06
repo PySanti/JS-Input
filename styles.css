@@ -23,8 +23,9 @@ html{
     border-radius: 20px;
     transition: transform .2s, box-shadow .2s;
     box-shadow: #000 0px 0px 10px;
-    z-index: 99;
+    z-index: 999999;
 }
+
 .main-input-container-writting-animation{
     transform: scale(1.05,1.05);
     box-shadow: #000 10px 10px 50px;
@@ -33,6 +34,8 @@ html{
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 99;
 }
 
 
@@ -76,10 +79,12 @@ html{
 
 .writting-ball{
     position: absolute;
-    z-index: -9;
+    z-index: 9;
     width: 2vw;
     height: 2vw;
-    background-color: #000;
+    background-color: var(--cursor-final-color);
+    box-shadow: 0px 00px 10px var(--cursor-final-color);
+    border: none;
     border-radius: 20px;
 }
 

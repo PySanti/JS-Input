@@ -19,7 +19,6 @@ initialMsgButtonElement.addEventListener('click', function (eventObject){
     cursorElement.classList.add(cursorAnimationName);
 })
 mainContainerElement.addEventListener('mouseleave', function (eventObject){
-    console.log("Hola");
     if (printLettersCount ===0){
         cursorElement.classList.remove(cursorAnimationName);
         initialMsgContainer.classList.remove(initialMsgAnimationName);

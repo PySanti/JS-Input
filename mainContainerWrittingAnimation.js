@@ -9,35 +9,48 @@ const writtingBallsContainer = document.getElementsByClassName(writtingBallsCont
 
 // variables
 let writtingBallsList = []
+const writtingBallsMinimizationFactor = 0.4;
 
-
-class WrittingBalls{
-    constructor(newElementClassName, newElementContainer, mainContainerPositionObj){
-        this.element = generateWrittingBall(newElementClassName, newElementContainer, mainContainerPositionObj)
-        this.position = [selfPositionElement.x, selfPositionElement.y]
-        this.move = generateRandomMove()
-    }
-
-    update(){
-        let positionalElement = this.positionElement()
-        positionalElement.x += this.move[0]
-        positionalElement.y += this.move[1]
-    }
-
-    positionElement(){
-        return this.element.getBoundingClientRect();
-    }
-}
 
 function generateRandomMove(){
-    return [Math.random()*10,Math.random()*10];
+    let multiplicationFactor = 30
+    let newMove = [0,0];
+    for (let i = 0; i < 2; i++){
+        newMove[i] = (Math.random()*multiplicationFactor) - (multiplicationFactor/5);
+    }
+    return newMove;
 }
 
-function updateElements(writtingElementsList){
-    writtingElementsList.forEach((element) => {
-        element.update()
+function generateMoveVariation(){
+    let multiplicationFactor = 5
+    let newMove = [0,0];
+    for (let i = 0; i < 2; i++){
+        newMove[i] = (Math.random()*multiplicationFactor) - (multiplicationFactor/1.5);
+    }
+    return newMove;
+}
+
+function updateElements(writtingElementsList, minimizationFactor, elementsHtmlContainer){
+    let iterableList = writtingElementsList.map(function (element){
+        return element;
+    })
+    iterableList.forEach((element) => {
+        element.update(minimizationFactor)
+        if ((element.size[0] <= 0) || (element.size[1] <= 0)){
+            removeHtmlElement(elementsHtmlContainer, element.element);
+            removeListElement(writtingBallsList, element)
+        }
     });
 }
+
+function removeListElement(list, element){
+    list.splice(list.indexOf(element), 1);
+}
+
+function removeHtmlElement(containerElement, htmlElement){
+    containerElement.removeChild(htmlElement);
+}
+
 
 function generateWrittingBall(newElementClassName, newElementContainer, mainContainerPositionObj){
     // Esta funcion genera el elemento en HTML y lo retorna, la idea es tomar este elemento y asignarlo en un objeto
@@ -48,24 +61,71 @@ function generateWrittingBall(newElementClassName, newElementContainer, mainCont
     newElement.style.left = `${mainContainerPositionObj.x + (mainContainerPositionObj.width/2)}px`
     return newElement;
 }
-function generateRandomColor(){
-    return undefined;
+function generateContainerAnimation (containerElement, animationClassName, animationDuration) {
+    containerElement.classList.add(animationClassName)
+    setTimeout(function (){
+        containerElement.classList.remove(animationClassName);
+    },animationDuration)  
 }
+function getCurrentElementPosition(element){
+    let currPos = [0,0]
+    let currAxi = undefined
+    for (let i = 0; i < 2; i++) {
+        currAxi = (i === 0) ? element.style.left : element.style.top;
+        currPos[i] = Number(currAxi.split('px')[0]);
+    }
+    return currPos
+}
+
+
+class WrittingBalls{
+    constructor(newElementClassName, newElementContainer, mainContainerPositionObj){
+        this.element = generateWrittingBall(newElementClassName, newElementContainer, mainContainerPositionObj);
+        let selfPositionElement = this.getpositionElement;
+        this.position = [selfPositionElement.x, selfPositionElement.y];
+        this.size = [selfPositionElement.width, selfPositionElement.height];
+        console.log(this.size)
+        this.move = generateRandomMove()
+    }
+
+    update(minimizationFactor){
+        // move
+        let currentPos = getCurrentElementPosition(this.element);
+        let moveVariation = generateMoveVariation()
+        currentPos[0] += this.move[0];
+        currentPos[1] += this.move[1];
+        this.move[0] += moveVariation[0];
+        this.move[1] += moveVariation[1];
+        this.element.style.left = `${currentPos[0]}px`;
+        this.element.style.top = `${currentPos[1]}px`;
+
+        // size
+        this.size[0] -= minimizationFactor;
+        this.size[1] -= minimizationFactor;
+        this.element.style.width = `${this.size[0]}px`;
+        this.element.style.height = `${this.size[1]}px`;
+    }
+
+
+    get getpositionElement(){
+        return this.element.getBoundingClientRect();
+    }
+}
+
+
 
 
 bodyElement.addEventListener('keydown', function (event) {
     if (cursorElement.classList.contains(cursorAnimationName)){
-        mainContainerElement.classList.add(mainContainerAnimationClassName)
-        setTimeout(function (){
-            mainContainerElement.classList.remove(mainContainerAnimationClassName);
-        },50)
-    let newWrittigBall = new WrittingBalls(writtingBallClassName, writtingBallsContainer, mainContainerPositionObj);
-    writtingBallsList.push(newWrittigBall);
-
+        generateContainerAnimation(mainContainerElement, mainContainerAnimationClassName, 50)
+        if (event.key !== backSpace){
+            let newWrittigBall = new WrittingBalls(writtingBallClassName, writtingBallsContainer, mainContainerPositionObj);
+            writtingBallsList.push(newWrittigBall);
+        }
     }
 })
 
 setInterval(() => {
-    updateElements(writtingBallsList)
-console.log("Hola")
-}, 50);
+    updateElements(writtingBallsList, writtingBallsMinimizationFactor, writtingBallsContainer);
+    console.log(`Longitud de el arreglo de bolas ${writtingBallsList.length}`)
+}, 30);
